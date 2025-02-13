@@ -23,7 +23,7 @@ public class Meeting extends Event implements Completable {
     }
 
     // Get the end time of the meeting
-    public LocalDateTime getEndTime() {
+    public LocalDateTime getEndDateTime() {
         return endDateTime;
     }
 
@@ -36,7 +36,7 @@ public class Meeting extends Event implements Completable {
         return location;
     }
 
-    public void setEndTime(LocalDateTime end) {
+    public void setEndDateTime(LocalDateTime end) {
         this.endDateTime = end;
     }
 
