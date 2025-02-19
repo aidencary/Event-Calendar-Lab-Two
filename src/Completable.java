@@ -3,4 +3,5 @@ public interface Completable {
     void complete();
     // Checks if the event is complete
     boolean isComplete();
+
 }

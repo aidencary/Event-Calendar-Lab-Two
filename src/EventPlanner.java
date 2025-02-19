@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDateTime;
 
 /**
  * The EventPlanner class serves as the main entry point for the event calendar application.
@@ -34,9 +35,10 @@ public class EventPlanner {
      * Adds default events to the event list.
      * @param events The EventListPanel to which default events will be added.
      */
+
     private static void addDefaultEvents(EventListPanel events) {
-        events.addEvent(new Deadline("Project Submission", java.time.LocalDateTime.now().plusDays(3)));
-        events.addEvent(new Meeting("Team Meeting", java.time.LocalDateTime.now().plusHours(5), java.time.LocalDateTime.now().plusHours(6), "Conference Room"));
+        events.addEvent(new Deadline("Project Submission", LocalDateTime.of(2025, 2, 18, 23, 59)));
+        events.addEvent(new Meeting("Team Meeting", LocalDateTime.of(2025, 2, 18, 13, 00), LocalDateTime.of(2025, 2, 18, 14, 30), "Conference Room"));
     }
 }
 
