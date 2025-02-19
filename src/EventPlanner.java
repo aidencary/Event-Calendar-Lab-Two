@@ -12,12 +12,13 @@ public class EventPlanner {
     public static void main(String[] args) {
 
         final int frameWidth = 800;
+        final int frameHeight = 400;
 
         SwingUtilities.invokeLater(() -> {
             // Create the main application window
             JFrame frame = new JFrame("Event Planner");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(frameWidth, 500);
+            frame.setSize(frameWidth, frameHeight);
 
             // Create and add the EventListPanel
             EventListPanel eventListPanel = new EventListPanel();

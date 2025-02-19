@@ -14,7 +14,7 @@ public class EventPanel extends JPanel {
     DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM d, yyyy");  // Format for the dates
     DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm"); // Using a 24-hour format
 
-    // Constructor
+    // Constructor for Events
     EventPanel(Event event) {
         this.event = event;
 
@@ -25,7 +25,7 @@ public class EventPanel extends JPanel {
         eventDetailsPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         add(eventDetailsPanel, BorderLayout.CENTER);
 
-        // Name
+        // Gets the name of the event
         nameLabel = new JLabel("" + event.getName());
         nameLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
         eventDetailsPanel.add(nameLabel);

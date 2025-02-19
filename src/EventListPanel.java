@@ -10,9 +10,9 @@ public class EventListPanel extends JPanel {
     private JPanel displayPanel; // Panel to hold EventPanels
     private JComboBox<String> sortDropDown; // Dropdown for sorting events
     private JCheckBox filterCompleted; // Checkbox to filter completed events
-    private JCheckBox filterEvents;
-    private JCheckBox filterDeadlines;
-    private JCheckBox filterMeetings;
+    private JCheckBox filterEvents; // Checkbox to filter events
+    private JCheckBox filterDeadlines; // Checkbox to filter deadlines
+    private JCheckBox filterMeetings; // Checkbox to filter meetings
 
     /**
      * Constructor for the EventListPanel.
