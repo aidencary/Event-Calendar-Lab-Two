@@ -69,11 +69,11 @@ public class EventPanel extends JPanel {
                 if (completableEvent.isComplete()) {
                     completableEvent.complete();  // Unmark as completed
                     completeButton.setText("Complete");
-                    completeButton.setEnabled(true);
+                    //completeButton.setEnabled(true);
                 } else {
                     completableEvent.complete();  // Mark as completed
                     completeButton.setText("Completed");
-                    completeButton.setEnabled(false); // After something is marked completed, it cannot be marked uncompleted
+                    //completeButton.setEnabled(); // After something is marked completed, it cannot be marked uncompleted
                 }
             });
 
@@ -83,6 +83,7 @@ public class EventPanel extends JPanel {
 
     // Updates the display, such as disabling the complete button if completed
     private void updateDisplay() {
+
         if (event instanceof Completable completableEvent) {
             if (completableEvent.isComplete() && completeButton != null) {
                 completeButton.setEnabled(false);

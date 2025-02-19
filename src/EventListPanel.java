@@ -10,12 +10,16 @@ public class EventListPanel extends JPanel {
     private JPanel displayPanel; // Panel to hold EventPanels
     private JComboBox<String> sortDropDown; // Dropdown for sorting events
     private JCheckBox filterCompleted; // Checkbox to filter completed events
+    private JCheckBox filterEvents;
+    private JCheckBox filterDeadlines;
+    private JCheckBox filterMeetings;
 
     /**
      * Constructor for the EventListPanel.
      * Initializes the event list and UI components.
      */
     public EventListPanel() {
+
         this.events = new ArrayList<>();
         setLayout(new BorderLayout());
 
@@ -40,15 +44,35 @@ public class EventListPanel extends JPanel {
         // Add event button
         JButton addEventButton = new JButton("Add Event");
         addEventButton.addActionListener(e -> new AddEventModal(this));
+        controlPanel.add(addEventButton);
+
+        // Add filter checkboxes
+        filterEvents = new JCheckBox("Filter Events");
+        filterDeadlines = new JCheckBox("Filter Deadlines");
+        filterMeetings = new JCheckBox("Filter Meetings");
+        filterCompleted = new JCheckBox("Filter Completed Tasks");
+
+        // Add action listeners for filters
+        filterEvents.addActionListener(e -> updateDisplay());
+        filterDeadlines.addActionListener(e -> updateDisplay());
+        filterMeetings.addActionListener(e -> updateDisplay());
+        filterCompleted.addActionListener(e -> updateDisplay());
+
 
         // Add components to control panel
         controlPanel.add(sortDropDown);
         controlPanel.add(filterCompleted);
-        controlPanel.add(addEventButton);
+        controlPanel.add(filterEvents);
+        controlPanel.add(filterDeadlines);
+        controlPanel.add(filterMeetings);
+        controlPanel.add(filterCompleted);
+
 
         // Add panels to the main panel
         add(controlPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
+
+
     }
 
     /**
@@ -66,13 +90,30 @@ public class EventListPanel extends JPanel {
     private void updateDisplay() {
         displayPanel.removeAll();
         for (Event event : events) {
-            if (filterCompleted.isSelected() && event instanceof Completable && ((Completable) event).isComplete()) {
-                continue; // Skip completed events if filtering is enabled
+            boolean displaying = true;
+
+            // Check filtering conditions
+            if (filterCompleted.isSelected() && event instanceof Completable) {
+                displaying = !((Completable) event).isComplete();
             }
-            displayPanel.add(new EventPanel(event));
+
+            if (event instanceof Completable && filterEvents.isSelected()) {
+                displaying = false;
+            }
+
+            if (event instanceof Deadline && filterDeadlines.isSelected()) {
+                displaying = false;
+            }
+
+            if (event instanceof Meeting && filterMeetings.isSelected()) {
+                displaying = false;
+            }
+
+            // Add event to the display if it passes all filters
+            if (displaying) {
+                displayPanel.add(new EventPanel(event));
+            }
         }
-        displayPanel.revalidate();
-        displayPanel.repaint();
     }
 
     /**
