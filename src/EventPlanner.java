@@ -12,7 +12,7 @@ public class EventPlanner {
     public static void main(String[] args) {
 
         final int frameWidth = 800;
-        final int frameHeight = 400;
+        final int frameHeight = 1000;
 
         SwingUtilities.invokeLater(() -> {
             // Create the main application window
