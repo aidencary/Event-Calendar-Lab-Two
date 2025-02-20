@@ -5,12 +5,11 @@ import java.time.format.DateTimeFormatter;
 /**
  * The EventPanel class represents a visual component to display an Event.
  */
-
 public class EventPanel extends JPanel {
     private Event event;
     private JPanel eventDetailsPanel;
-    private JLabel nameLabel, startTimeLabel, endTimeLabel, durationLabel, locationLabel, dateLabel;
-    private JButton completeButton; // Button to mark event as complete
+    private JLabel nameLabel, startTimeLabel, endTimeLabel, durationLabel, locationLabel, dateLabel, completedLabel;
+    private JButton completeButton;
     DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM d, yyyy");  // Format for the dates
     DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm"); // Using a 24-hour format
 
@@ -59,39 +58,20 @@ public class EventPanel extends JPanel {
             eventDetailsPanel.add(endTimeLabel);
         }
 
+        if (event instanceof Completable completable) {
+            completedLabel = new JLabel("Completed: " + completable.isComplete());
+            eventDetailsPanel.add(completedLabel);
 
-        if (event instanceof Completable completableEvent) {
-            completeButton = new JButton(completableEvent.isComplete() ? "Completed" : "Complete");
-            completeButton.setEnabled(!completableEvent.isComplete()); // Disable if already completed
-
+            completeButton = new JButton(completable.isComplete() ? "Completed" : "Mark Complete");
+            completeButton.setEnabled(!completable.isComplete());
             completeButton.addActionListener(e -> {
-                // Toggle completion status
-                if (completableEvent.isComplete()) {
-                    completableEvent.complete();  // Unmark as completed
-                    completeButton.setText("Complete");
-                    //completeButton.setEnabled(true);
-                } else {
-                    completableEvent.complete();  // Mark as completed
-                    completeButton.setText("Completed");
-                    //completeButton.setEnabled(); // After something is marked completed, it cannot be marked uncompleted
-                }
-            });
-
-            add(completeButton, BorderLayout.SOUTH);
-        }
-    }
-
-    // Updates the display, such as disabling the complete button if completed
-    private void updateDisplay() {
-
-        if (event instanceof Completable completableEvent) {
-            if (completableEvent.isComplete() && completeButton != null) {
-                completeButton.setEnabled(false);
+                completable.complete();
+                completedLabel.setText("Completed: " + completable.isComplete());
                 completeButton.setText("Completed");
-            } else {
-                completeButton.setEnabled(true);
-                completeButton.setText("Complete");
-            }
+                completeButton.setEnabled(false); // Disable the button after marking as completed
+            });
+            buttonPanel.add(completeButton);
         }
+        add(buttonPanel, BorderLayout.EAST);
     }
 }

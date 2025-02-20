@@ -10,7 +10,7 @@ public class EventListPanel extends JPanel {
     private JPanel displayPanel; // Panel to hold EventPanels
     private JComboBox<String> sortDropDown; // Dropdown for sorting events
     private JCheckBox filterCompleted; // Checkbox to filter completed events
-    private JCheckBox filterEvents; // Checkbox to filter events
+    private JCheckBox filterEvents; // Checkbox to filter general events
     private JCheckBox filterDeadlines; // Checkbox to filter deadlines
     private JCheckBox filterMeetings; // Checkbox to filter meetings
 
@@ -19,7 +19,6 @@ public class EventListPanel extends JPanel {
      * Initializes the event list and UI components.
      */
     public EventListPanel() {
-
         this.events = new ArrayList<>();
         setLayout(new BorderLayout());
 
@@ -37,27 +36,21 @@ public class EventListPanel extends JPanel {
         sortDropDown = new JComboBox<>(sortOptions);
         sortDropDown.addActionListener(e -> sortEvents());
 
-        // Filter completed events checkbox
+        // Filter checkboxes
         filterCompleted = new JCheckBox("Hide Completed Events");
+        filterEvents = new JCheckBox("Filter General Events");
+        filterDeadlines = new JCheckBox("Filter Deadlines");
+        filterMeetings = new JCheckBox("Filter Meetings");
+
+        // Add action listeners for filters
         filterCompleted.addActionListener(e -> updateDisplay());
+        filterEvents.addActionListener(e -> updateDisplay());
+        filterDeadlines.addActionListener(e -> updateDisplay());
+        filterMeetings.addActionListener(e -> updateDisplay());
 
         // Add event button
         JButton addEventButton = new JButton("Add Event");
         addEventButton.addActionListener(e -> new AddEventModal(this));
-        controlPanel.add(addEventButton);
-
-        // Add filter checkboxes
-        filterEvents = new JCheckBox("Filter Events");
-        filterDeadlines = new JCheckBox("Filter Deadlines");
-        filterMeetings = new JCheckBox("Filter Meetings");
-        filterCompleted = new JCheckBox("Filter Completed Tasks");
-
-        // Add action listeners for filters
-        filterEvents.addActionListener(e -> updateDisplay());
-        filterDeadlines.addActionListener(e -> updateDisplay());
-        filterMeetings.addActionListener(e -> updateDisplay());
-        filterCompleted.addActionListener(e -> updateDisplay());
-
 
         // Add components to control panel
         controlPanel.add(sortDropDown);
@@ -65,14 +58,11 @@ public class EventListPanel extends JPanel {
         controlPanel.add(filterEvents);
         controlPanel.add(filterDeadlines);
         controlPanel.add(filterMeetings);
-        controlPanel.add(filterCompleted);
-
+        controlPanel.add(addEventButton);
 
         // Add panels to the main panel
         add(controlPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
-
-
     }
 
     /**
@@ -85,7 +75,7 @@ public class EventListPanel extends JPanel {
     }
 
     /**
-     * Updates the event display panel.
+     * Updates the event display panel based on the filters.
      */
     private void updateDisplay() {
         displayPanel.removeAll();
@@ -93,19 +83,19 @@ public class EventListPanel extends JPanel {
             boolean displaying = true;
 
             // Check filtering conditions
-            if (filterCompleted.isSelected() && event instanceof Completable) {
-                displaying = !((Completable) event).isComplete();
-            }
-
-            if (event instanceof Completable && filterEvents.isSelected()) {
+            if (filterCompleted.isSelected() && event instanceof Completable && ((Completable) event).isComplete()) {
                 displaying = false;
             }
 
-            if (event instanceof Deadline && filterDeadlines.isSelected()) {
+            if (filterEvents.isSelected() && (event instanceof Deadline || event instanceof Meeting)) {
                 displaying = false;
             }
 
-            if (event instanceof Meeting && filterMeetings.isSelected()) {
+            if (filterDeadlines.isSelected() && event instanceof Deadline) {
+                displaying = false;
+            }
+
+            if (filterMeetings.isSelected() && event instanceof Meeting) {
                 displaying = false;
             }
 
@@ -114,6 +104,8 @@ public class EventListPanel extends JPanel {
                 displayPanel.add(new EventPanel(event));
             }
         }
+        displayPanel.revalidate();
+        displayPanel.repaint();
     }
 
     /**
@@ -136,4 +128,3 @@ public class EventListPanel extends JPanel {
         updateDisplay();
     }
 }
-

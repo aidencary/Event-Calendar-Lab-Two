@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 public class EventPlanner {
     public static void main(String[] args) {
 
-        final int frameWidth = 800;
-        final int frameHeight = 1000;
+        final int frameWidth = 1000;
+        final int frameHeight = 500;
 
         SwingUtilities.invokeLater(() -> {
             // Create the main application window
