@@ -77,16 +77,7 @@ The **Event Calendar Application** is a Java-based GUI program that allows users
 4. Use sorting and filtering options to manage events.
 5. Mark events as **Complete** when finished.
 
-## Future Enhancements
-- **Reminder System**: Notifications for upcoming events.
-- **Recurring Events**: Support for daily, weekly, or monthly recurring events.
-- **Calendar View**: A visual calendar representation of events.
-- **Data Persistence**: Save and load events from a file or database.
-
 ## Contributors
-- **Your Name** (Your Email/Username)
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- Aiden Cary
 
 
