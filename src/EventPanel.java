@@ -26,9 +26,9 @@ public class EventPanel extends JPanel {
 
         // Gets the name of the event
         nameLabel = new JLabel("" + event.getName());
-        nameLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+        //nameLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 1, 0));
         eventDetailsPanel.add(nameLabel);
-        eventDetailsPanel.add(Box.createVerticalGlue());
+        //eventDetailsPanel.add(Box.createVerticalGlue());
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         // Meeting output
