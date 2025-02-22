@@ -11,7 +11,7 @@ import java.time.format.DateTimeParseException;
  */
 public class AddEventModal extends JDialog {
     final int panelLength = 400;
-    final int panelWidth = 600;
+    final int panelWidth = 700;
     private JTextField nameField;
     private JComboBox<String> eventTypeBox;
     private JTextField startDateField;
